@@ -1,0 +1,18 @@
+﻿@model IEnumerable<DiabeticAide.Models.ViewModels.UserViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<div class="cardContainer">
+    @foreach (var item in Model)
+    {
+        <div class="userCard" asp-action="PatientData">
+            @Html.ActionLink(item.FirstName + " " + item.LastName, "Details", new { id = item.UserId })
+
+        </div>
+
+    }
+
+</div>
