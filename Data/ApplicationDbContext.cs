@@ -45,6 +45,6 @@ namespace DiabeticAide.Data
             modelBuilder.Entity<ApplicationUser>().HasData(user);
         }
 
-        public DbSet<DiabeticAide.Models.ViewModels.UserViewModel> UserViewModel { get; set; }
+        
     }
 }
