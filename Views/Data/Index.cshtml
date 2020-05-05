@@ -8,11 +8,10 @@
 <div class="cardContainer">
     @foreach (var item in Model)
     {
-        <div class="userCard" asp-action="PatientData">
-            @Html.ActionLink(item.FirstName + " " + item.LastName, "Details", new { id = item.UserId })
-
-        </div>
-
+        <form class="userCard" asp-action="Details" asp-route-id="@item.UserId">
+            <input name="userId" type="hidden" value="@item.UserId" />
+            <input type="submit" value="@item.FirstName @item.LastName" class="btn btn-danger" />
+        </form>
     }
 
 </div>

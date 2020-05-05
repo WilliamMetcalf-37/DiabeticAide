@@ -73,23 +73,26 @@ namespace DiabeticAide.Controllers
         }
 
         // GET: Data/Details/5
-        public ActionResult Details(string userId)
+        public async Task<ActionResult> Details(string userId)
         {
-            return View(userId);
+            var user = await GetUserAsync();
+            var userData = await _context.UserData.Where(p => p.UserId == userId).ToListAsync();
+
+            return View(userData);
         }
 
-        // GET: Data/Create
+        // GET: Data/Create/userId
 
-        public ActionResult Create()
+        public ActionResult Create(string userId)
         {
 
-            return View();
+            return View(userId);
         }
 
         // POST: Data/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(UserData data)
+        public async Task<ActionResult> Create(string userId, UserData data)
         {
             try
             {

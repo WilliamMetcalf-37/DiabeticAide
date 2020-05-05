@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DiabeticAide.Models.UserData>
+
+@{
+    ViewData["Title"] = "Details";
+
+}
+
+<h1>Details</h1>
+
+<p>
+    <a asp-action="Create" name ="userId" value="@Model.First().UserId">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reading)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Reading)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
