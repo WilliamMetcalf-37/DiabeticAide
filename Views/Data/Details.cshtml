@@ -5,11 +5,12 @@
 
 }
 
-<h1>Details</h1>
+    <h1>@Model.First().User.FirstName @Model.First().User.LastName</h1>
 
-<p>
-    <a asp-action="Create" name ="userId" value="@Model.First().UserId">Create New</a>
-</p>
+    <p>
+        @*<a asp-action="Create" name="userId" value="@Model.First().UserId">Create New</a>*@
+        @Html.ActionLink("Create New", "Create", new { id = @Model.First().UserId })
+    </p>
 <table class="table">
     <thead>
         <tr>

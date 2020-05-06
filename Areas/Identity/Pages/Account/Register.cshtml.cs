@@ -72,14 +72,14 @@ namespace DiabeticAide.Areas.Identity.Pages.Account
             [Display(Name = "Are you a Patient?")]
             public bool IsPatient { get; set; }
 
-            [Required]
+            
             [Display(Name = "Doctor's Name")]
             public string DoctorName { get; set; }
-            [Required]
+            
             [EmailAddress]
             [Display(Name = "Doctor's Email")]
             public string DoctorEmail { get; set; }
-            [Required]
+            
             [Display(Name = "Doctor's Phone Number")]
             public string DoctorPhone { get; set; }
         }

@@ -1,0 +1,26 @@
+﻿@model DiabeticAide.Models.ViewModels.AddHelperViewModel
+
+@{
+    ViewData["Title"] = "Helpers";
+}
+
+<h1>Index</h1>
+
+<div>
+    <h4>@ViewData["Title"]</h4>
+    <ul>
+
+        @foreach (var item in Model.CurrentHelpers)
+        {
+            <li>@item.FirstName @item.LastName</li>
+        }
+    </ul>
+    <h4>Add a Helper</h4>
+    <form asp-action="AddHelper">
+    <label asp-for="NewHelperId" class="control-label">Add a helper!</label>
+    <select asp-for="NewHelperId" class="form-control" id="exampleSelect2" asp-items="@Model.PotentialHelpers">
+    </select>
+        <input type="submit" value="Add Helper" class="btn btn-primary" />
+    </form>
+</div>
+

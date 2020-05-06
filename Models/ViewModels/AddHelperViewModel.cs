@@ -8,7 +8,7 @@ namespace DiabeticAide.Models.ViewModels
 {
     public class AddHelperViewModel
     {
-        public List<ApplicationUser> CurrentHelpers { get; set; }
+        public List<UserViewModel> CurrentHelpers { get; set; }
         public string NewHelperId { get; set; }
         public List<SelectListItem> PotentialHelpers { get; set; }
     }

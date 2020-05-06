@@ -76,7 +76,7 @@ namespace DiabeticAide.Controllers
         public async Task<ActionResult> Details(string userId)
         {
             var user = await GetUserAsync();
-            var userData = await _context.UserData.Where(p => p.UserId == userId).ToListAsync();
+            var userData = await _context.UserData.Where(p => p.UserId == userId).Include(u=> u.User).ToListAsync();
 
             return View(userData);
         }
@@ -98,14 +98,23 @@ namespace DiabeticAide.Controllers
             {
                 // TODO: Add insert logic here
                 var user = await GetUserAsync();
+
+
                 var newUserData = new UserData()
-                {
-                    UserId = user.Id,
+                {                   
                     Note = data.Note,
                     Reading = data.Reading,
                     DateTime = DateTime.Now
 
                 };
+                if(userId == null)
+                {
+                    newUserData.UserId = user.Id;
+                }
+                else
+                {
+                    newUserData.UserId = userId;
+                }
 
                 _context.UserData.Add(newUserData);
                 await _context.SaveChangesAsync();
@@ -118,21 +127,24 @@ namespace DiabeticAide.Controllers
         }
 
         // GET: Data/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var data = await _context.UserData.Include(u => u.User).FirstOrDefaultAsync(d => d.Id == id);
+            return View(data);
         }
 
         // POST: Data/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, UserData data)
         {
             try
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                _context.UserData.Update(data);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Details", new { id = data.UserId, userId = data.UserId });
             }
             catch
             {
@@ -141,20 +153,22 @@ namespace DiabeticAide.Controllers
         }
 
         // GET: Data/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var data = await _context.UserData.Include(u=>u.User).FirstOrDefaultAsync(d => d.Id == id);
+            return View(data);
         }
 
         // POST: Data/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, UserData data)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                _context.UserData.Remove(data);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -162,6 +176,9 @@ namespace DiabeticAide.Controllers
                 return View();
             }
         }
+
+        
+
         private async Task<ApplicationUser> GetUserAsync() => await _userManager.GetUserAsync(HttpContext.User);
     }
 }
