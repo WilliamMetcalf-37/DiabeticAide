@@ -1155,6 +1155,23 @@
           }
         }
       },
+      "Select.Pdf/20.1.0": {
+        "type": "package",
+        "contentFiles": {
+          "contentFiles/any/any/Select.Html.dep": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "Select.Html.dep"
+          },
+          "contentFiles/any/any/Select.Tools.dep": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": true,
+            "outputPath": "Select.Tools.dep"
+          }
+        }
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4477,6 +4494,29 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Select.Pdf/20.1.0": {
+      "sha512": "w9Q1Q6t/spoqdL87fD4UrPCZeDOQrwDftHlDLz3Up2dvxTT9PAQH3HKFdu4RZunGOuETWMHSPVMNxMdff4kfVQ==",
+      "type": "package",
+      "path": "select.pdf/20.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "contentFiles/any/any/Select.Html.dep",
+        "contentFiles/any/any/Select.Tools.dep",
+        "images/icon.png",
+        "lib/net20/Select.Html.dep",
+        "lib/net20/Select.Pdf.dll",
+        "lib/net20/Select.Pdf.xml",
+        "lib/net20/Select.Tools.dep",
+        "lib/net40/Select.Html.dep",
+        "lib/net40/Select.Pdf.dll",
+        "lib/net40/Select.Pdf.xml",
+        "lib/net40/Select.Tools.dep",
+        "readme.txt",
+        "select.pdf.20.1.0.nupkg.sha512",
+        "select.pdf.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -8595,7 +8635,8 @@
       "Microsoft.AspNetCore.Identity.UI >= 3.1.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.3",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.3",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.2"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.2",
+      "Select.Pdf >= 20.1.0"
     ]
   },
   "packageFolders": {
@@ -8658,6 +8699,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[3.1.2, )"
+          },
+          "Select.Pdf": {
+            "target": "Package",
+            "version": "[20.1.0, )"
           }
         },
         "imports": [

@@ -62,6 +62,7 @@ namespace DiabeticAide.Controllers
                     if (id == TheUser.Value)
                     {
                         ishelper = true;
+                        break;
                     }
                     else
                     {
@@ -76,6 +77,34 @@ namespace DiabeticAide.Controllers
         
             return View(HelperViewModel);
         }
+
+        public async Task<ActionResult> AddHelper(AddHelperViewModel viewModel)
+        {
+            var user = await GetUserAsync();
+            var helper = new UserHelper()
+            {
+                PatientId = user.Id,
+                HelperId = viewModel.NewHelperId
+            };
+            _context.UserHelpers.Add(helper);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<ActionResult> RemoveHelper(AddHelperViewModel viewModel)
+        {
+            var user = await GetUserAsync();
+
+            var helperObj = await _context.UserHelpers.FirstOrDefaultAsync(u => u.PatientId == user.Id && u.HelperId == viewModel.HelperId);
+
+            _context.UserHelpers.Remove(helperObj);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+
 
         // GET: Helper/Details/5
         public ActionResult Details(int id)
