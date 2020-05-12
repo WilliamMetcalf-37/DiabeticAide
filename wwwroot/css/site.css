@@ -7,6 +7,17 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+.reveal-if-active {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+input[type="checkbox"]:checked ~ .reveal-if-active {
+    opacity: 1;
+    max-height: 100px;
+    overflow: visible;
+}
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;

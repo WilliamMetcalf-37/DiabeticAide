@@ -18,7 +18,7 @@ namespace DiabeticAide.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<UserData> UserData { get; set; }
         public DbSet<UserHelper> UserHelpers { get; set; }
-
+        public DbSet<UserReminderTime> UserReminderTimes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -30,6 +30,7 @@ namespace DiabeticAide.Data
                 UserName = "sweetWilly3k@gmail.com",
                 NormalizedUserName = "ADMIN@ADMIN.COM",
                 Email = "admin@admin.com",
+                PhoneNumber = "+19186309012",
                 NormalizedEmail = "ADMIN@ADMIN.COM",
                 EmailConfirmed = true,
                 LockoutEnabled = false,

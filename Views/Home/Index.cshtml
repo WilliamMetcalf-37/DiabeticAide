@@ -1,8 +1,53 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model DiabeticAide.Models.ViewModels.UserDayChartViewModel
+@using Highsoft.Web.Mvc.Charts
+@using Highsoft.Web.Mvc.Charts.Rendering
+@{
+    ViewData["Title"] = "Index";
+
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
+@{ var chartOptions = new Highcharts
+            {
+                Title = new Title
+                {
+                    Text = "Today's Readings"
+                },
+                XAxis = new List<XAxis>
+                {
+                    new XAxis
+                    {
+                        Categories = Model.ReadingTimes
+                    }
+                },
+                Credits = new Credits
+                {
+                    Enabled = false
+                },
+                Series = new List<Series>
+{
+                new AreaSeries
+                {
+                    Name = Model.Patient.FirstName,
+                    Data =  Model.ReadingValues
+                }
+
+        }
+    };
+
+    chartOptions.ID = "chart";
+    var renderer = new HighchartsRenderer(chartOptions);
+}
+
+@Html.Raw(renderer.RenderHtml())
+
+

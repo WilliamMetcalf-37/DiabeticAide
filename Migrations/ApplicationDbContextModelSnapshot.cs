@@ -108,7 +108,7 @@ namespace DiabeticAide.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1dd328f0-5226-4733-835b-f1ba1fb45bee",
+                            ConcurrencyStamp = "afe4811b-efa9-4458-9d09-de14c851ee25",
                             DoctorEmail = "william.g.metcalf@gmail.com",
                             DoctorName = "Carrie",
                             DoctorPhone = "918-123-1234",
@@ -120,7 +120,7 @@ namespace DiabeticAide.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEvenbzDM7okqIR37t1qNbxZK5XwZq8jVnE6XVjA17FDYSvEOWnn+lXUtMUPFl1wkA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMn0e5IkxqAdrm0DVSFrktG4y8V0EyqPmqv75nzr2/i14QRypibMxksJYKYbCWwYdg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -145,9 +145,11 @@ namespace DiabeticAide.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserData");
                 });
@@ -172,6 +174,26 @@ namespace DiabeticAide.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("UserHelpers");
+                });
+
+            modelBuilder.Entity("DiabeticAide.Models.UserReminderTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("TimeOfDay")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserReminderTimes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -309,6 +331,13 @@ namespace DiabeticAide.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("DiabeticAide.Models.UserData", b =>
+                {
+                    b.HasOne("DiabeticAide.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("DiabeticAide.Models.UserHelper", b =>
                 {
                     b.HasOne("DiabeticAide.Models.ApplicationUser", "Helper")
@@ -318,6 +347,13 @@ namespace DiabeticAide.Migrations
                     b.HasOne("DiabeticAide.Models.ApplicationUser", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId");
+                });
+
+            modelBuilder.Entity("DiabeticAide.Models.UserReminderTime", b =>
+                {
+                    b.HasOne("DiabeticAide.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

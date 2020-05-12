@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DiabeticAide.Data;
 using DiabeticAide.Models;
 using DiabeticAide.Models.ViewModels;
+using Highsoft.Web.Mvc.Charts;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Rotativa;
+using Syncfusion.HtmlConverter;
+using Syncfusion.Pdf;
 
 namespace DiabeticAide.Controllers
 {
@@ -17,6 +23,8 @@ namespace DiabeticAide.Controllers
 
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+
+  
 
         public DataController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -75,11 +83,19 @@ namespace DiabeticAide.Controllers
         // GET: Data/Details/5
         public async Task<ActionResult> Details(string userId)
         {
+            var viewModel = new UserDataViewModel();
             var user = await GetUserAsync();
             var userData = await _context.UserData.Where(p => p.UserId == userId).Include(u=> u.User).ToListAsync();
 
-            return View(userData);
+            var patient = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == userId);
+            viewModel.User = user;
+            viewModel.Patient = patient;
+            viewModel.UsersData = userData;
+            return View(viewModel);
         }
+
+        
+
 
         // GET: Data/Create/userId
 
@@ -177,7 +193,50 @@ namespace DiabeticAide.Controllers
             }
         }
 
-        
+
+        public async Task<ActionResult> Chart(string patientId)
+        {
+            var user = await GetUserAsync();
+            var patient = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == patientId);
+            var thisMonth = DateTime.Now.Month;
+            var thisMonthsData = await _context.UserData.Where(ud => ud.UserId == patient.Id && ud.DateTime.Month == thisMonth).ToListAsync();
+
+            var viewModel = new UserDayChartViewModel()
+            {
+                ReadingValues = new List<AreaSeriesData>(),
+                ReadingTimes = new List<string>()
+            };
+
+            foreach (var item in thisMonthsData)
+            {
+                var areaSeriesData = new AreaSeriesData()
+                {
+                    Name = "Blood Sugar Reading",
+                    Y = item.Reading
+                };
+
+                viewModel.ReadingValues.Add(areaSeriesData);
+                viewModel.ReadingTimes.Add(item.DateTime.ToString());
+
+            }
+
+
+            viewModel.User = user;
+            viewModel.Patient = patient;
+
+
+            return View(viewModel);
+
+        }
+
+
+
+
+
+
+
+
+
 
         private async Task<ApplicationUser> GetUserAsync() => await _userManager.GetUserAsync(HttpContext.User);
     }

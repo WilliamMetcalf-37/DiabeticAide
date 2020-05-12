@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DiabeticAide.Areas.Identity.Pages.Account
 {
@@ -54,6 +55,11 @@ namespace DiabeticAide.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
+
+            [Required]
+            [Display(Name = "Phone Number")]
+            [StringLength(10, ErrorMessage = "The {0} must be a {2} digit number.", MinimumLength = 10)]
+            public string PhoneNumber { get; set; }
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -105,7 +111,8 @@ namespace DiabeticAide.Areas.Identity.Pages.Account
                     DoctorEmail = Input.DoctorEmail,
                     DoctorName = Input.DoctorName,
                     DoctorPhone = Input.DoctorPhone,
-                    IsPatient = Input.IsPatient
+                    IsPatient = Input.IsPatient,
+                    PhoneNumber = Input.PhoneNumber
 
 
                 };

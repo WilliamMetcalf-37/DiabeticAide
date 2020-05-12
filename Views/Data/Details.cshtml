@@ -1,33 +1,45 @@
-﻿@model IEnumerable<DiabeticAide.Models.UserData>
+﻿@model DiabeticAide.Models.ViewModels.UserDataViewModel
 
 @{
     ViewData["Title"] = "Details";
 
 }
 
-    <h1>@Model.First().User.FirstName @Model.First().User.LastName</h1>
+    <h1>@Model.User.FirstName @Model.User.LastName</h1>
+    <div>
+        <p>
+            @*<a asp-action="Create" name="userId" value="@Model.First().UserId">Create New</a>*@
+            @Html.ActionLink("Create New", "Create", new { id = @Model.User.Id })
+        </p>
 
-    <p>
-        @*<a asp-action="Create" name="userId" value="@Model.First().UserId">Create New</a>*@
-        @Html.ActionLink("Create New", "Create", new { id = @Model.First().UserId })
-    </p>
+        <div class="PDFandTextButtons">
+            @Html.ActionLink("View Chart", "Chart", "Data", new { patientId = Model.Patient.Id }, new { @class = "btn btn-primary" })
+
+            @if (Model.User.Id != Model.Patient.Id)
+            {
+                <div class="TextButton">
+                    @Html.ActionLink("Send Reminder", "SendSms", "Sms", new { phone = Model.Patient.PhoneNumber }, new { @class = "btn btn-primary" })
+                </div>
+            }
+        </div>
+    </div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Reading)
+                @Html.DisplayNameFor(model => model.UsersData.First().Reading)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Note)
+                @Html.DisplayNameFor(model => model.UsersData.First().Note)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateTime)
+                @Html.DisplayNameFor(model => model.UsersData.First().DateTime)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.UsersData) {
         <tr>
 
             <td>
