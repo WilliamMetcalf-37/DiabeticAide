@@ -12,5 +12,7 @@ namespace DiabeticAide.Models.ViewModels
         public ApplicationUser User { get; set; }
         public List<AreaSeriesData> ReadingValues { get; set; }
         public List<string> ReadingTimes { get; set; }
+        public string ChartLength { get; set; }
+        public string ChartTitle { get; set; }
     }
 }

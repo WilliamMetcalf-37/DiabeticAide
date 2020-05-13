@@ -4,6 +4,16 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly
+}
+
+.userCard {
+    flex-basis: auto;
+}
 .reveal-if-active {
     opacity: 0;
     max-height: 0;

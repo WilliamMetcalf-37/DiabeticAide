@@ -49,7 +49,7 @@ namespace DiabeticAide.Controllers
                     LastName = user.LastName
                 };
             }
-
+            
 
 
             var patientsUserIsHelperFor = await _context.UserHelpers
@@ -72,7 +72,7 @@ namespace DiabeticAide.Controllers
                     FirstName = user.FirstName,
                     LastName = user.LastName
                 };
-                patientsUserIsHelperFor.Add(currentUserModel);
+                patientsUserIsHelperFor.Insert(0,currentUserModel);
             }
 
             return View(patientsUserIsHelperFor);
@@ -85,9 +85,11 @@ namespace DiabeticAide.Controllers
         {
             var viewModel = new UserDataViewModel();
             var user = await GetUserAsync();
-            var userData = await _context.UserData.Where(p => p.UserId == userId).Include(u=> u.User).ToListAsync();
 
             var patient = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == userId);
+
+            var userData = await _context.UserData.Where(p => p.UserId == userId).Include(u=> u.User).ToListAsync();
+
             viewModel.User = user;
             viewModel.Patient = patient;
             viewModel.UsersData = userData;
@@ -194,20 +196,40 @@ namespace DiabeticAide.Controllers
         }
 
 
-        public async Task<ActionResult> Chart(string patientId)
+        public async Task<ActionResult> Chart(string patientId, string chartLength)
         {
             var user = await GetUserAsync();
-            var patient = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == patientId);
-            var thisMonth = DateTime.Now.Month;
-            var thisMonthsData = await _context.UserData.Where(ud => ud.UserId == patient.Id && ud.DateTime.Month == thisMonth).ToListAsync();
-
             var viewModel = new UserDayChartViewModel()
             {
                 ReadingValues = new List<AreaSeriesData>(),
                 ReadingTimes = new List<string>()
             };
+            var patient = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == patientId);
+            var chartData = new List<UserData>();
+            if (chartLength == "Month")
+            {
+                var thisMonth = DateTime.Now.Month;
+             chartData = await _context.UserData.Where(ud => ud.UserId == patient.Id && ud.DateTime.Month == thisMonth).ToListAsync();
+                viewModel.ChartTitle = "This Month's Chart";
+            }else if(chartLength == "Year")
+            {
+                var thisYear = DateTime.Now.Year;
+                chartData = await _context.UserData.Where(ud => ud.UserId == patient.Id && ud.DateTime.Year == thisYear).ToListAsync();
+                viewModel.ChartTitle = "This Year's Chart";
 
-            foreach (var item in thisMonthsData)
+            }else if (chartLength == "Day")
+            {
+                var today = DateTime.Now.Date;
+                chartData = await _context.UserData.Where(ud => ud.UserId == patient.Id && ud.DateTime.Date == today).ToListAsync();
+                viewModel.ChartTitle = "Today's Chart";
+            }
+
+
+            
+
+            
+
+            foreach (var item in chartData)
             {
                 var areaSeriesData = new AreaSeriesData()
                 {

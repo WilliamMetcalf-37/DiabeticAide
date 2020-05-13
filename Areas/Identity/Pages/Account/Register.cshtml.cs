@@ -58,6 +58,7 @@ namespace DiabeticAide.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Phone Number")]
+            [Range(typeof(int),"0", "10", ErrorMessage = "The {0} must be a {2} digit number.")]
             [StringLength(10, ErrorMessage = "The {0} must be a {2} digit number.", MinimumLength = 10)]
             public string PhoneNumber { get; set; }
             [Required]

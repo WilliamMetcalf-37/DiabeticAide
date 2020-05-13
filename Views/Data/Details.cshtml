@@ -5,15 +5,17 @@
 
 }
 
-    <h1>@Model.User.FirstName @Model.User.LastName</h1>
+    <h1>@Model.Patient.FirstName @Model.Patient.LastName</h1>
     <div>
         <p>
             @*<a asp-action="Create" name="userId" value="@Model.First().UserId">Create New</a>*@
-            @Html.ActionLink("Create New", "Create", new { id = @Model.User.Id })
+            @Html.ActionLink("Create New", "Create", new { id = @Model.Patient.Id })
         </p>
 
         <div class="PDFandTextButtons">
-            @Html.ActionLink("View Chart", "Chart", "Data", new { patientId = Model.Patient.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("View Last Month's Chart", "Chart", "Data", new { patientId = Model.Patient.Id, chartLength = "Month" }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("View Last Year's Chart", "Chart", "Data", new { patientId = Model.Patient.Id, chartLength = "Year" }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("View Today's Chart", "Chart", "Data", new { patientId = Model.Patient.Id, chartLength = "Day" }, new { @class = "btn btn-primary" })
 
             @if (Model.User.Id != Model.Patient.Id)
             {

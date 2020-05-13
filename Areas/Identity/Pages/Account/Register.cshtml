@@ -32,13 +32,11 @@
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-
-            
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" asp-for="Input.IsPatient" id="IsPatient">              
+            <div class="custom-control custom-checkbox form-group">
+                <input type="checkbox" class="custom-control-input" asp-for="Input.IsPatient" id="IsPatient" checked>
                 <label class="custom-control-label" for="IsPatient">Are you a patient?</label>
 
-                <div class="reveal-if-active form-group" id="DoctorInfo">
+                @*<div class="reveal-if-active form-group" id="DoctorInfo">
                     <label asp-for="Input.DoctorName"></label>
                     <input asp-for="Input.DoctorName" class="form-control" />
                     <span asp-validation-for="Input.DoctorName" class="text-danger"></span>
@@ -53,10 +51,8 @@
                         <input asp-for="Input.DoctorPhone" class="form-control" />
                         <span asp-validation-for="Input.DoctorPhone" class="text-danger"></span>
                     </div>
-                </div>
+                </div>*@
             </div>
-
-
 
             <div class="form-group">
                 <label asp-for="Input.Password"></label>
@@ -68,7 +64,14 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+
+
+
+
+            <div class="form-group">
+
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">
