@@ -39,16 +39,7 @@ namespace DiabeticAide.Controllers
 
 
 
-            if (user.IsPatient == true)
-            {
-                var currentUserModel = new UserViewModel()
-                {
-                    Id = 1,
-                    UserId = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName
-                };
-            }
+           
             
 
 
