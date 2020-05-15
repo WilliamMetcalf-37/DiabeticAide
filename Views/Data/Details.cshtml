@@ -13,14 +13,17 @@
         </p>
 
         <div class="PDFandTextButtons">
-            @Html.ActionLink("View Last Month's Chart", "Chart", "Data", new { patientId = Model.Patient.Id, chartLength = "Month" }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("View Last Year's Chart", "Chart", "Data", new { patientId = Model.Patient.Id, chartLength = "Year" }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("View Today's Chart", "Chart", "Data", new { patientId = Model.Patient.Id, chartLength = "Day" }, new { @class = "btn btn-primary" })
+            <div class="chartButtons">
+            @Html.ActionLink("View Last Month's Chart", "Chart", "Data", new { patientId = Model.Patient.Id, chartLength = "Month" }, new { @class = "btn-sm btn-primary" })
+            @Html.ActionLink("View Last Year's Chart", "Chart", "Data", new { patientId = Model.Patient.Id, chartLength = "Year" }, new { @class = "btn-sm btn-primary" })
+            @Html.ActionLink("View Today's Chart", "Chart", "Data", new { patientId = Model.Patient.Id, chartLength = "Day" }, new { @class = "btn-sm btn-primary" })
+
+            </div>
 
             @if (Model.User.Id != Model.Patient.Id)
             {
                 <div class="TextButton">
-                    @Html.ActionLink("Send Reminder", "SendSms", "Sms", new { phone = Model.Patient.PhoneNumber }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Send Reminder", "SendSms", "Sms", new { phone = Model.Patient.PhoneNumber }, new { @class = "btn btn-danger" })
                 </div>
             }
         </div>

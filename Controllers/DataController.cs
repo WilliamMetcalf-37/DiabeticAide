@@ -127,7 +127,17 @@ namespace DiabeticAide.Controllers
 
                 _context.UserData.Add(newUserData);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if(userId != null)
+                {
+                return RedirectToAction("Details",new { userId = userId });
+
+                }
+                else
+                {
+                return RedirectToAction("Details", new { userId = user.Id });
+
+                }
+
             }
             catch
             {
@@ -178,7 +188,7 @@ namespace DiabeticAide.Controllers
                 // TODO: Add delete logic here
                 _context.UserData.Remove(data);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { userId = data.UserId });
             }
             catch
             {
@@ -224,7 +234,7 @@ namespace DiabeticAide.Controllers
             {
                 var areaSeriesData = new AreaSeriesData()
                 {
-                    Name = "Blood Sugar Reading",
+                    Name = item.Note,
                     Y = item.Reading
                 };
 

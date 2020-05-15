@@ -50,7 +50,7 @@ namespace DiabeticAide.Controllers
                     {
                         var areaSeriesData = new AreaSeriesData()
                         {
-                            Name = "Blood Sugar Reading",
+                            Name = item.Note,
                             Y = item.Reading
                         };
 

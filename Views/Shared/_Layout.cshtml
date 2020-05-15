@@ -32,12 +32,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Data" asp-action="Index">Data</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Data" asp-action="Index">Patients</a>
                             </li>
                             @if (currentUser.IsPatient == true)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Data" asp-action="Create">Data Entry</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Data" asp-action="Create">Enter A Reading</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Helper" asp-action="Index">Helpers</a>
